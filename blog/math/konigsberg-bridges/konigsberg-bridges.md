@@ -9,7 +9,7 @@ The "Seven Bridges of Königsberg" is a classic problem in mathematics that is w
 
 In the 18th century, the city of Königsberg, Prussia (now Kaliningrad, Russia) was set on the Pregel River. It included two large islands that were connected to each other and to the mainland by seven bridges.
 
-![A map of the Königsberg bridges](konigsberg-map.png)
+![A map of the Königsberg bridges](blog/math/konigsberg-bridges/konigsberg-map.png)
 *Image by [BoH](https://commons.wikimedia.org/wiki/User:BoH), via Wikimedia Commons, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en).*
 
 The puzzle was: **Can a person walk through the city in a way that crosses each of the seven bridges exactly once?**
