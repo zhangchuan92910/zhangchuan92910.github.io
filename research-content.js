@@ -59,23 +59,42 @@ const publications = [
 
 
 // ===================================
-// 3. ACADEMIC PROJECTS & EXPERIENCE
+// 3. TALKS & CONFERENCES
 // ===================================
-const academicProjects = [
+const talksAndConferences = [
+    // {
+    //     title: "A Structural Characterization of Strongly Chordal Semicomplete Digraphs",
+    //     subtitle: "Invited Talk | UVic Discrete Math Seminar | Oct 2025",
+    //     description: "Presented the main findings of my thesis research on extending structural properties from tournaments to semicomplete digraphs."
+    // },
+    // {
+    //     title: "Introduction to Randomized Algorithms",
+    //     subtitle: "Guest Lecture | CPSC 304, Simon Fraser University | Mar 2022",
+    //     description: "Delivered a guest lecture on the basics of randomized algorithms, including examples like the randomized quicksort and min-cut algorithms."
+    // }
+];
+
+// ===================================
+// 4. TEACHING EXPERIENCE
+// ===================================
+const teachingExperience = [
     {
-        title: "Project: \"Attention is not all you need\"",
-        subtitle: "Course Project, Simon Fraser University | Sep 2020 – Dec 2020",
-        description: "Researched the Transformer model; tested the influence of attention weights on output."
-    },
-    {
-        title: "Project: Sketching Recognition with ML",
-        subtitle: "Course Project, Simon Fraser University | Jan 2020 – Mar 2020",
-        description: "Tested KNN, SVM, and CNN on the Quick Draw Dataset; improved CNN structure based on Sketch-a-Net."
-    },
-    {
-        title: "Research Assistance, SJTU-JI",
-        subtitle: "Undergraduate Researcher | May 2014 – Jan 2015",
-        description: "Benchmark supercomputers for CFD simulation via OpenCFD."
+        title: "Teaching Assistant, MATH 152: Calculus II",
+        subtitle: "University of Victoria | Sep 2025 – Dec 2025",
+        description: "Led weekly tutorials, graded assignments, and held office hours for a first-year calculus course."
     }
-    // Add new projects here
+];
+
+// ===================================
+// 5. WORKSHOPS
+// ===================================
+// (I am intentionally leaving this array empty to test your request.)
+// (The JavaScript in research.html will see this is empty and will HIDE the "Workshops" title.)
+const workshops = [
+    // Example of what you *could* add:
+    // {
+    //     title: "Git for Academics",
+    //     subtitle: "Workshop Facilitator | UVic Grad Students' Society | Nov 2025",
+    //     description: "Led a 2-hour workshop on using Git and GitHub for version control in research projects and LaTeX documents."
+    // }
 ];
