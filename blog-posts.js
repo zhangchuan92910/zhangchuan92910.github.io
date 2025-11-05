@@ -18,7 +18,7 @@ const blogPosts = [
         description: "A quick walkthrough of the classic Two Sum problem (LeetCode 1) and how to solve it efficiently using a hash map."
     },
     {
-        title: "The Seven Bridges of Königsberg (哥德堡七桥问题)",
+        title: "The Seven Bridges of Königsberg",
         date: "November 02, 2025",
         category: "math",
         file: "blog/math/konigsberg-bridges/konigsberg-bridges.md", 
