@@ -69,7 +69,7 @@
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <!-- 1. 研究兴趣 Research Interests (新结构) -->
-                <section id="interests-section" class="mb-16 hidden">
+                <section id="interest-list" class="mb-16 hidden">
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-6">Research Interests</h2>
                     <div id="interests-container" class="space-y-4">
                         <!-- JS will populate this -->
@@ -77,7 +77,7 @@
                 </section>
 
                 <!-- 2. 精选论文 Selected Publications (新结构) -->
-                <section id="publications-section" class="mb-16 hidden">
+                <section id="publication-list" class="mb-16 hidden">
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-6">Selected Publications</h2>
                     <ol id="publications-container" class="list-decimal list-inside space-y-5 text-gray-700">
                         <!-- JS will populate this -->
@@ -85,7 +85,7 @@
                 </section>
 
                 <!-- 3. 讲座与会议 Talks & Conferences (新结构) -->
-                <section id="talks-section" class="mb-16 hidden">
+                <section id="talks-list" class="mb-16 hidden">
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-6">Talks & Conferences</h2>
                     <div id="talks-container" class="space-y-8">
                         <!-- JS will populate this -->
@@ -93,7 +93,7 @@
                 </section>
 
                 <!-- 4. 教学经历 Teaching Experience (新结构) -->
-                <section id="teaching-section" class="mb-16 hidden">
+                <section id="teaching-list" class="mb-16 hidden">
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-6">Teaching Experience</h2>
                     <div id="teaching-container" class="space-y-8">
                         <!-- JS will populate this -->
@@ -101,7 +101,7 @@
                 </section>
 
                 <!-- 5. 研讨会 Workshops (新结构) -->
-                <section id="workshops-section" class="mb-16 hidden">
+                <section id="workshops-list" class="mb-16 hidden">
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-6">Workshops</h2>
                     <div id="workshops-container" class="space-y-8">
                         <!-- JS will populate this -->
@@ -162,9 +162,7 @@
                     array.forEach(item => {
                         listElement.appendChild(renderItem(item));
                     });
-                } else {
-                    // Data is empty, hide the entire section (title included)
-                    sectionElement.style.display = 'none';
+                    listElement.classList.remove('hidden');
                 }
             }
 
