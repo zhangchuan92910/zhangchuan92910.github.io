@@ -12,105 +12,155 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Navigation Bar -->
-    <nav class="bg-white/70 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo / Name -->
-                <div class="flex-shrink-0">
-                    <a href="index.html" class="text-2xl font-bold text-gray-900">Chuan Zhang</a>
+    <div class="flex flex-col min-h-screen">
+        <!-- 导航栏 Navigation Bar -->
+        <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-10">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <!-- Left: Brand -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-2xl font-bold text-gray-900">[Your Name]</a>
+                    </div>
+                    
+                    <!-- Right: Desktop Links (Hidden on small screens) -->
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium text-gray-900">
+                            Home
+                        </a>
+                        <a href="research.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                            Research
+                        </a>
+                        <a href="blog.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                            Blog
+                        </a>
+                    </div>
+                    
+                    <!-- Right: Mobile Hamburger Button (Visible on small screens) -->
+                    <div class="sm:hidden flex items-center">
+                        <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <!-- Icon when menu is closed (Hamburger) -->
+                            <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                            <!-- Icon when menu is open (X) -->
+                            <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                
-                <!-- Desktop Navigation Links -->
-                <div class="hidden sm:flex sm:items-center sm:space-x-8">
-                    <a href="index.html" class="text-blue-600 border-b-2 border-blue-600 px-1 pt-1 text-sm font-medium" aria-current="page">About Me</a>
-                    <a href="research.html" class="text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent border-b-2 px-1 pt-1 text-sm font-medium">Research</a>
-                    <a href="blog.html" class="text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent border-b-2 px-1 pt-1 text-sm font-medium">Blog</a>
-                </div>
-                
-                <!-- Mobile Menu Button (Optional, for simplicity we can hide it) -->
-                <!-- <div class="sm:hidden"> ... </div> -->
             </div>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <div class="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
-            <div class="md:flex">
-                <!-- Left Column: Profile Picture and Contact -->
-                <div class="md:w-1/3 bg-gray-50 p-8 border-b md:border-b-0 md:border-r border-gray-200">
-                    <div class="flex flex-col items-center text-center">
-                        <!-- Profile Image -->
-                        <img class_name="rounded-full h-48 w-48 object-cover shadow-md" 
-                             src="https://placehold.co/200x200/E2E8F0/A0AEC0?text=Your\nPhoto" 
-                             alt="Profile photo of Chuan Zhang">
-                        
-                        <h2 class="mt-6 text-2xl font-bold text-gray-900">Chuan Zhang</h2>
-                        <p class="mt-2 text-sm text-gray-600">M.Sc. Student, Discrete Mathematics</p>
-                        <p class="mt-1 text-sm text-gray-500">University of Victoria, BC, Canada</p>
+            <!-- Mobile Menu Dropdown (Hidden by default) -->
+            <div id="mobile-menu" class="hidden sm:hidden">
+                <div class="pt-2 pb-3 space-y-1 px-2">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium bg-indigo-50 border-indigo-500 text-indigo-700">Home</a>
+                    <a href="research.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Research</a>
+                    <a href="blog.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Blog</a>
+                </div>
+            </div>
+        </nav>
 
-                        <!-- Contact Links with Icons -->
-                        <div class="mt-8 space-y-4 w-full">
-                            <!-- Email -->
-                            <a href="mailto:your.email@example.com" class="group flex items-center justify-center text-sm font-medium text-gray-700 hover:text-blue-600">
-                                <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.161V6a2 2 0 00-2-2H3z" />
-                                    <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
-                                </svg>
-                                <span>your.email@example.com</span>
-                            </a>
-                            <!-- GitHub -->
-                            <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                                <svg class="w-5 h-5 text-gray-400 group-hover:text-gray-800 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 5.05c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.398.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.85-2.339 4.695-4.566 4.942.359.308.678.92.678 1.853 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0020 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
-                                </svg>
-                                <span>github.com/your-username</span>
-                            </a>
-                            <!-- LinkedIn -->
-                            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center text-sm font-medium text-gray-700 hover:text-blue-700">
-                                <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M16.338 16.338H13.67V12.16c0-.99-.018-2.268-1.38-2.268-1.38 0-1.592 1.078-1.592 2.196v4.25H7.996V7.39h2.562v1.17h.036c.355-.675 1.227-1.38 2.527-1.38 2.7 0 3.2 1.778 3.2 4.09v4.068zM5.013 5.91c-.96 0-1.74-.78-1.74-1.74s.78-1.74 1.74-1.74 1.74.78 1.74 1.74-.78 1.74-1.74 1.74zM6.338 7.39H3.688v8.948h2.65V7.39zM18 0H2C.895 0 0 .895 0 2v16c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2V2c0-1.105-.895-2-2-2z" />
-                                </svg>
-                                <span>LinkedIn Profile</span>
-                            </a>
+        <!-- 页面内容 Page Content -->
+        <main class="flex-grow pt-24"> <!-- pt-16 (nav height) + pt-8 (spacing) -->
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                            <!-- CV Download Button -->
-                            <a href="Zhang_Chuan_CV.pdf" download="Zhang_Chuan_CV.pdf" class="!mt-10 inline-block w-full text-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                Download My CV
-                            </a>
+                <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
+                    <div class="md:flex">
+                        <!-- Left Column: Profile Picture and Contact -->
+                        <div class="md:w-1/3 bg-gray-50 p-8 border-b md:border-b-0 md:border-r border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <!-- Profile Image -->
+                                <img class_name="rounded-full h-48 w-48 object-cover shadow-md" 
+                                    src="https://placehold.co/200x200/E2E8F0/A0AEC0?text=Your\nPhoto" 
+                                    alt="Profile photo of Chuan Zhang">
+                                
+                                <h2 class="mt-6 text-2xl font-bold text-gray-900">Chuan Zhang</h2>
+                                <p class="mt-2 text-sm text-gray-600">M.Sc. Student, Discrete Mathematics</p>
+                                <p class="mt-1 text-sm text-gray-500">University of Victoria, BC, Canada</p>
+
+                                <!-- Contact Links with Icons -->
+                                <div class="mt-8 space-y-4 w-full">
+                                    <!-- Email -->
+                                    <a href="mailto:your.email@example.com" class="group flex items-center justify-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.161V6a2 2 0 00-2-2H3z" />
+                                            <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
+                                        </svg>
+                                        <span>your.email@example.com</span>
+                                    </a>
+                                    <!-- GitHub -->
+                                    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-gray-800 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 5.05c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.398.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.85-2.339 4.695-4.566 4.942.359.308.678.92.678 1.853 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0020 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>github.com/your-username</span>
+                                    </a>
+                                    <!-- LinkedIn -->
+                                    <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center text-sm font-medium text-gray-700 hover:text-blue-700">
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M16.338 16.338H13.67V12.16c0-.99-.018-2.268-1.38-2.268-1.38 0-1.592 1.078-1.592 2.196v4.25H7.996V7.39h2.562v1.17h.036c.355-.675 1.227-1.38 2.527-1.38 2.7 0 3.2 1.778 3.2 4.09v4.068zM5.013 5.91c-.96 0-1.74-.78-1.74-1.74s.78-1.74 1.74-1.74 1.74.78 1.74 1.74-.78 1.74-1.74 1.74zM6.338 7.39H3.688v8.948h2.65V7.39zM18 0H2C.895 0 0 .895 0 2v16c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2V2c0-1.105-.895-2-2-2z" />
+                                        </svg>
+                                        <span>LinkedIn Profile</span>
+                                    </a>
+
+                                    <!-- CV Download Button -->
+                                    <a href="Zhang_Chuan_CV.pdf" download="Zhang_Chuan_CV.pdf" class="!mt-10 inline-block w-full text-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        Download My CV
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: About Me -->
+                        <div class="md:w-2/3 p-8">
+                            <h1 class="text-3xl font-bold tracking-tight text-gray-900">About Me</h1>
+                            <p class="mt-6 text-base text-gray-700 leading-relaxed">
+                                I am a Master's student at the University of Victoria, specializing in <b>Graph Theory</b>. My current research, under the supervision of Dr. Jing Huang, focuses on exploring structural characterizations of digraph classes, particularly strongly chordal and semicomplete digraphs.
+                            </p>
+                            <p class="mt-4 text-base text-gray-700 leading-relaxed">
+                                I hold a B.Sc. in Computer Science from Simon Fraser University and a B.Sc. in Mechanical Engineering from Shanghai Jiao Tong University. This interdisciplinary background gives me a unique perspective, blending theoretical computer science with practical engineering and software development skills.
+                            </p>
+                            <p class="mt-4 text-base text-gray-700 leading-relaxed">
+                                Previously, I worked as a Product Engineer at Roboterra Inc., where I designed robotics curricula and developed drivers for educational robots. I'm also an active member of the competitive programming community and enjoy tackling complex algorithmic problems.
+                            </p>
+                            <p class="mt-4 text-base text-gray-700 leading-relaxed">
+                                When I'm out of my academic work, I enjoy trying delicious foods, playing video games (now making my own instead of play), and archery (starting from 2025)...
+                            </p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Right Column: About Me -->
-                <div class="md:w-2/3 p-8">
-                    <h1 class="text-3xl font-bold tracking-tight text-gray-900">About Me</h1>
-                    <p class="mt-6 text-base text-gray-700 leading-relaxed">
-                        I am a Master's student at the University of Victoria, specializing in <b>Graph Theory</b>. My current research, under the supervision of Dr. Jing Huang, focuses on exploring structural characterizations of digraph classes, particularly strongly chordal and semicomplete digraphs.
-                    </p>
-                    <p class="mt-4 text-base text-gray-700 leading-relaxed">
-                        I hold a B.Sc. in Computer Science from Simon Fraser University and a B.Sc. in Mechanical Engineering from Shanghai Jiao Tong University. This interdisciplinary background gives me a unique perspective, blending theoretical computer science with practical engineering and software development skills.
-                    </p>
-                    <p class="mt-4 text-base text-gray-700 leading-relaxed">
-                        Previously, I worked as a Product Engineer at Roboterra Inc., where I designed robotics curricula and developed drivers for educational robots. I'm also an active member of the competitive programming community and enjoy tackling complex algorithmic problems.
-                    </p>
-                    <p class="mt-4 text-base text-gray-700 leading-relaxed">
-                        When I'm out of my academic work, I enjoy trying delicious foods, playing video games (now making my own instead of play), and archery (starting from 2025)...
-                    </p>
-                </div>
             </div>
-        </div>
+        </main>
+
+        <!-- 页脚 Footer -->
+        <footer class="bg-white border-t border-gray-200 mt-16">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-sm text-gray-500">
+                    &copy; 2025 Chuan Zhang. All rights reserved.
+                </p>
+            </div>
+        </footer>
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-12 pb-12">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-sm text-gray-500">
-                &copy; 2025 Chuan Zhang. All rights reserved.
-            </p>
-        </div>
-    </footer>
+    <!-- JavaScript for Mobile Menu Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('icon-open');
+            const iconClose = document.getElementById('icon-close');
+
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                iconOpen.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -1,173 +1,203 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Chuan Zhang</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="blog-posts.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-        }
-        .filter-btn.active {
-            background-color: #3b82f6; /* blue-500 */
-            color: white;
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- 导航栏 (Navigation Bar) -->
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- 导航左侧: 名字 -->
-                <div class="flex-shrink-0">
-                    <a href="index.html" class="text-xl font-bold text-gray-900">Chuan Zhang</a>
-                </div>
-                <!-- 导航右侧: 链接 -->
-                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    <a href="index.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-                        About Me
-                    </a>
-                    <a href="research.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-                        Research
-                    </a>
-                    <a href="blog.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-blue-500 text-sm font-medium text-gray-900">
-                        Blog
-                    </a>
+    <div class="flex flex-col min-h-screen">
+        <!-- 导航栏 Navigation Bar -->
+        <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-10">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <!-- Left: Brand -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-2xl font-bold text-gray-900">Chuan Zhang</a>
+                    </div>
+                    
+                    <!-- Right: Desktop Links (Hidden on small screens) -->
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                            Home
+                        </a>
+                        <a href="research.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                            Research
+                        </a>
+                        <a href="blog.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium text-gray-900">
+                            Blog
+                        </a>
+                    </div>
+                    
+                    <!-- Right: Mobile Hamburger Button (Visible on small screens) -->
+                    <div class="sm:hidden flex items-center">
+                        <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <!-- Icon when menu is closed (Hamburger) -->
+                            <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                            <!-- Icon when menu is open (X) -->
+                            <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <!-- 主体内容 (Main Content) -->
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        
-        <section id="blog-posts">
-            <h1 class="text-3xl font-bold text-gray-900 mb-8">Blog & Personal Interests</h1>
-            
-            <p class="text-lg text-gray-700 mb-8">
-                Here I write about topics that interest me, from academic takeaways to personal hobbies. Posts are organized by category.
-            </p>
+            <!-- Mobile Menu Dropdown (Hidden by default) -->
+            <div id="mobile-menu" class="hidden sm:hidden">
+                <div class="pt-2 pb-3 space-y-1 px-2">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Home</a>
+                    <a href="research.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Research</a>
+                    <a href="blog.html" class="block px-3 py-2 rounded-md text-base font-medium bg-indigo-50 border-indigo-500 text-indigo-700">Blog</a>
+                </div>
+            </div>
+        </nav>
 
-            <!-- 博客布局: 筛选器 + 列表 -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- 页面内容 Page Content -->
+        <main class="flex-grow pt-24">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
+                    
+                    <!-- Left: Filters (筛选器) -->
+                    <aside class="md:w-1/4">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Categories</h2>
+                        <ul id="category-filters" class="space-y-2">
+                            <!-- JS will populate this -->
+                        </ul>
+                    </aside>
 
-                <!-- 左侧: 筛选器 (Filters) -->
-                <aside class="md:col-span-1">
-                    <div class="bg-white p-6 rounded-lg shadow sticky top-24">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-                        <div id="filter-container" class="space-y-2">
-                            <!-- 筛选按钮将由 JavaScript 动态插入这里 -->
-                            <button class="filter-btn w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 active" data-category="all">
-                                All Posts
-                            </button>
+                    <!-- Right: Post List (文章列表) -->
+                    <div class="md:w-3/4">
+                        <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-6">Blog Posts</h2>
+                        <div id="post-list" class="space-y-8">
+                            <!-- JS will populate this -->
                         </div>
                     </div>
-                </aside>
 
-                <!-- 右侧: 文章列表 (Post List) -->
-                <main class="md:col-span-3">
-                    <div id="post-list-container" class="space-y-8">
-                        <!-- 文章卡片将由 JavaScript 动态插入这里 -->
-                        <p class="text-gray-500">Loading posts...</p>
-                    </div>
-                </main>
-
+                </div>
             </div>
-        </section>
+        </main>
 
+        <!-- 页脚 Footer -->
+        <footer class="bg-white border-t border-gray-200 mt-16">
+            <div class="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+                &copy; 2025 Chuan Zhang. All rights reserved.
+            </div>
+        </footer>
     </div>
 
-    <!-- 页脚 (Footer) -->
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-gray-500">
-            &copy; [Current Year] [Your Name]. All rights reserved.
-        </div>
-    </footer>
-
-    <!-- 你的博客文章 "数据库" -->
-    <script src="blog-posts.js"></script>
-    
-    <!-- 动态加载和过滤的逻辑 -->
+    <!-- JavaScript for Mobile Menu Toggle -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const postListContainer = document.getElementById('post-list-container');
-            const filterContainer = document.getElementById('filter-container');
-            
-            // 确保 blogPosts 变量 (来自 blog-posts.js) 存在
-            if (typeof blogPosts === 'undefined') {
-                postListContainer.innerHTML = '<p class="text-red-500">Error: Could not load blog-posts.js</p>';
-                return;
-            }
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('icon-open');
+            const iconClose = document.getElementById('icon-close');
 
-            // 1. 生成所有分类 (Generate all categories)
-            const categories = ['all', ...new Set(blogPosts.map(post => post.category))];
-            filterContainer.innerHTML = ''; // 清空加载中的按钮
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                iconOpen.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
+        });
+    </script>
+
+    <!-- JavaScript for Content Rendering -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 修复: 直接使用 blogPosts, 而不是 window.blogPosts
+            const posts = (typeof blogPosts !== 'undefined') ? blogPosts : [];
             
+            const postListContainer = document.getElementById('post-list');
+            const categoryFiltersContainer = document.getElementById('category-filters');
+
+            // 1. 获取所有唯一的分类
+            const categories = ['All', ...new Set(posts.map(post => post.category))];
+
+            // 2. 渲染分类筛选器
             categories.forEach(category => {
+                const li = document.createElement('li');
                 const button = document.createElement('button');
-                button.className = 'filter-btn w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100';
-                button.textContent = category.charAt(0).toUpperCase() + category.slice(1); // e.g., "Technical"
+                button.textContent = category.charAt(0).toUpperCase() + category.slice(1);
                 button.dataset.category = category;
-                if (category === 'all') {
-                    button.classList.add('active'); // 默认激活 "All"
+                button.className = 'w-full text-left px-3 py-2 rounded-md text-sm font-medium';
+                
+                if (category === 'All') {
+                    button.classList.add('bg-indigo-100', 'text-indigo-700'); // Active state
+                } else {
+                    button.classList.add('text-gray-600', 'hover:bg-gray-100', 'hover:text-gray-900');
                 }
+                
                 button.addEventListener('click', () => filterPosts(category));
-                filterContainer.appendChild(button);
+                li.appendChild(button);
+                categoryFiltersContainer.appendChild(li);
             });
 
-            // 2. 过滤文章的函数
-            window.filterPosts = (category) => {
-                // 更新激活按钮的样式
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.category === category);
-                });
-                
-                // 过滤和显示文章
-                const filteredPosts = (category === 'all') 
-                    ? blogPosts 
-                    : blogPosts.filter(post => post.category === category);
-                
-                renderPosts(filteredPosts);
-            };
+            // 3. 渲染文章列表 (初始加载)
+            renderPosts(posts);
 
-            // 3. 渲染文章列表的函数
-            const renderPosts = (posts) => {
+            // 4. 筛选文章的函数
+            function filterPosts(category) {
+                // 更新按钮的 active 状态
+                document.querySelectorAll('#category-filters button').forEach(btn => {
+                    if (btn.dataset.category === category) {
+                        btn.classList.add('bg-indigo-100', 'text-indigo-700');
+                        btn.classList.remove('text-gray-600', 'hover:bg-gray-100', 'hover:text-gray-900');
+                    } else {
+                        btn.classList.remove('bg-indigo-100', 'text-indigo-700');
+                        btn.classList.add('text-gray-600', 'hover:bg-gray-100', 'hover:text-gray-900');
+                    }
+                });
+
+                // 筛选并重新渲染
+                const filteredPosts = (category === 'All') ? posts : posts.filter(post => post.category === category);
+                renderPosts(filteredPosts);
+            }
+
+            // 5. 渲染文章列表的函数
+            function renderPosts(postsToRender) {
                 postListContainer.innerHTML = ''; // 清空列表
                 
-                if (posts.length === 0) {
+                if (postsToRender.length === 0) {
                     postListContainer.innerHTML = '<p class="text-gray-500">No posts in this category yet.</p>';
                     return;
                 }
-                
-                posts.forEach(post => {
-                    // 为每篇文章创建一个链接，指向 post.html 模板
-                    // 并使用 URL 参数告诉模板要加载哪个 md 文件
-                    const postUrl = `post.html?post=${encodeURIComponent(post.file)}`;
+
+                postsToRender.forEach(post => {
+                    const postElement = document.createElement('article');
+                    postElement.className = 'bg-white shadow-sm border border-gray-200 rounded-lg overflow-hidden';
                     
-                    const postCard = `
-                        <div class="bg-white p-8 rounded-lg shadow">
-                            <h2 class="text-xl font-semibold text-gray-900 hover:text-blue-600">
-                                <a href="${postUrl}">${post.title}</a>
-                            </h2>
-                            <p class="text-sm text-gray-500 mb-4">
-                                ${post.date} | Category: ${post.category.charAt(0).toUpperCase() + post.category.slice(1)}
-                            </p>
-                            <p class="text-gray-700">
-                                ${post.description}
-                            </p>
-                            <a href="${postUrl}" class="inline-block mt-4 text-blue-600 font-medium hover:underline">Read more &rarr;</a>
+                    const postLink = `post.html?post=${post.file}`;
+                    
+                    postElement.innerHTML = `
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-900">
+                                <a href="${postLink}" class="hover:text-indigo-600">${post.title}</a>
+                            </h3>
+                            <p class="mt-3 text-sm text-gray-600">${post.description}</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">${post.category.charAt(0).toUpperCase() + post.category.slice(1)}</span>
+                                <span class="text-xs text-gray-500">${post.date}</span>
+                            </div>
                         </div>
                     `;
-                    postListContainer.innerHTML += postCard;
+                    postListContainer.appendChild(postElement);
                 });
-            };
-
-            // 4. 初始加载 (Initial load)
-            renderPosts(blogPosts); // 默认显示所有文章
+            }
         });
     </script>
 </body>
