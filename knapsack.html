@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knapsack Outfit Challenge</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --brand-blue: #2f4ed8;
+        --brand-indigo: #273176;
+        --brand-mint: #42c9a4;
+        --surface: #ffffff;
+        --surface-muted: #eff2ff;
+        --text: #1b1f3b;
+        --text-muted: #5c628f;
+        --danger: #d64550;
+        --shadow: 0 18px 40px rgba(31, 52, 169, 0.12);
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #f5f6ff 0%, #f0f8ff 100%);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 24px 32px;
+      }
+
+      header {
+        width: min(1080px, 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        gap: 16px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.25rem;
+        letter-spacing: 0.02em;
+      }
+
+      .subtitle {
+        margin: 4px 0 0;
+        color: var(--text-muted);
+        font-size: 1rem;
+      }
+
+      .reset-btn {
+        border: none;
+        background: var(--surface);
+        color: var(--brand-indigo);
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 999px;
+        box-shadow: 0 10px 30px rgba(39, 49, 118, 0.15);
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .reset-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(39, 49, 118, 0.18);
+      }
+
+      main {
+        width: min(1080px, 100%);
+        display: grid;
+        grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 24px;
+        height: calc(100vh - 160px);
+        min-height: 520px;
+      }
+
+      .panel {
+        background: var(--surface);
+        border-radius: 24px;
+        padding: 24px 26px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 1.6rem;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: var(--surface-muted);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .progress-bar__fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--brand-blue), var(--brand-mint));
+        transition: width 0.4s ease;
+      }
+
+      .info-summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .points-display {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 12px;
+        align-items: stretch;
+        flex-direction: row;
+        flex: 0 1 320px;
+      }
+
+      .points-card {
+        background: var(--surface-muted);
+        border-radius: 18px;
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 220px;
+        box-shadow: inset 0 0 0 1px rgba(39, 49, 118, 0.08);
+      }
+
+      .points-card.primary {
+        background: linear-gradient(120deg, rgba(47, 78, 216, 0.12), rgba(66, 201, 164, 0.12));
+        box-shadow: inset 0 0 0 1px rgba(47, 78, 216, 0.18);
+      }
+
+      .points-card label {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        letter-spacing: 0.01em;
+      }
+
+      .points-progress {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--brand-indigo);
+      }
+
+      .points-progress small {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .value-highlight {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--brand-indigo);
+      }
+
+      .value-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .stage-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: rgba(47, 78, 216, 0.12);
+        color: var(--brand-indigo);
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .stage-details {
+        flex: 1 1 260px;
+        background: var(--surface-muted);
+        padding: 14px 18px;
+        border-radius: 16px;
+        line-height: 1.45;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+
+      .items-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .category-card {
+        background: var(--surface-muted);
+        border-radius: 20px;
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .category-card h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--brand-indigo);
+      }
+
+      .options {
+        display: grid;
+        gap: 12px;
+      }
+
+      .option-btn {
+        border-radius: 16px;
+        border: 2px solid transparent;
+        padding: 14px 16px;
+        text-align: left;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: border 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .option-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .option-name {
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: 0.01em;
+      }
+
+      .option-meta {
+        display: flex;
+        gap: 8px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+
+      .option-tag {
+        background: rgba(47, 78, 216, 0.12);
+        color: var(--brand-indigo);
+        font-weight: 700;
+        padding: 2px 10px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        letter-spacing: 0.02em;
+      }
+
+      .option-tag.value {
+        background: rgba(66, 201, 164, 0.16);
+        color: #16755e;
+      }
+
+      .option-swatch {
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+      }
+
+      .option-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(30, 39, 90, 0.15);
+      }
+
+      .option-btn.active {
+        border-color: var(--brand-blue);
+        box-shadow: 0 12px 26px rgba(47, 78, 216, 0.22);
+      }
+
+      .option-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+        transform: none;
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      .option-btn:disabled .option-swatch {
+        opacity: 0.6;
+      }
+
+      .cart-summary {
+        background: var(--surface-muted);
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        border-radius: 20px;
+        padding: 20px 24px;
+        gap: 12px;
+      }
+
+      #cart-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 260px;
+        overflow-y: auto;
+        padding-right: 6px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(39, 49, 118, 0.25) transparent;
+      }
+
+      #cart-list::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      #cart-list::-webkit-scrollbar-track {
+        background: rgba(39, 49, 118, 0.08);
+        border-radius: 999px;
+      }
+
+      #cart-list::-webkit-scrollbar-thumb {
+        background: rgba(39, 49, 118, 0.25);
+        border-radius: 999px;
+      }
+      .info-panel {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .info-metrics {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .info-metrics h2 {
+        margin: 0 0 4px;
+        font-size: 1.4rem;
+        color: var(--brand-indigo);
+      }
+
+      .info-metrics p {
+        margin: 0;
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+
+      .stage-header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .stage-header .progress-bar {
+        flex: 1;
+      }
+
+      .selection-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-height: 0;
+        align-self: stretch;
+      }
+
+      .selection-scroll {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        overflow-y: auto;
+        padding-right: 8px;
+        min-height: 0;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(39, 49, 118, 0.25) transparent;
+      }
+
+      .selection-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .selection-scroll::-webkit-scrollbar-track {
+        background: rgba(39, 49, 118, 0.08);
+        border-radius: 999px;
+      }
+
+      .selection-scroll::-webkit-scrollbar-thumb {
+        background: rgba(39, 49, 118, 0.2);
+        border-radius: 999px;
+      }
+
+      .avatar-panel {
+        min-height: 0;
+        align-self: stretch;
+      }
+
+      .cart-summary h3 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .cart-entry {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(39, 49, 118, 0.08);
+        font-size: 0.92rem;
+      }
+
+      .cart-entry:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .primary-action {
+        border: none;
+        background: linear-gradient(90deg, var(--brand-blue), var(--brand-mint));
+        color: #fff;
+        font-weight: 700;
+        padding: 16px 24px;
+        border-radius: 16px;
+        cursor: pointer;
+        font-size: 1.05rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .primary-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 38px rgba(47, 78, 216, 0.25);
+      }
+
+      .primary-action:disabled {
+        background: #c2c8ff;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      .feedback {
+        min-height: 24px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .avatar-panel {
+        align-items: center;
+      }
+
+      .avatar-canvas {
+        background: var(--surface-muted);
+        border-radius: 28px;
+        padding: 18px;
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        min-height: 360px;
+      }
+
+      .avatar-canvas svg {
+        width: 220px;
+        height: 320px;
+        overflow: visible;
+      }
+
+      .avatar-layer {
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+      }
+
+      .avatar-layer.show {
+        opacity: 1;
+      }
+
+      .avatar-layer.top {
+        width: 130px;
+        height: 108px;
+        border-radius: 24px 24px 32px 32px;
+        top: 132px;
+        left: 50%;
+        transform: translate(-50%, -6px);
+      }
+
+      .avatar-layer.bottom {
+        width: 110px;
+        height: 110px;
+        border-radius: 26px 26px 18px 18px;
+        top: 226px;
+        left: 50%;
+        transform: translate(-50%, -2px);
+      }
+
+      .avatar-layer.shoes {
+        width: 138px;
+        height: 34px;
+        border-radius: 18px;
+        top: 322px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .avatar-layer.outerwear {
+        width: 182px;
+        height: 210px;
+        border-radius: 50%;
+        top: 122px;
+        left: 50%;
+        transform: translate(-50%, -10px);
+      }
+
+      .avatar-layer.hat {
+        width: 100px;
+        height: 48px;
+        border-radius: 50px 50px 12px 12px;
+        top: 36px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .avatar-layer.glasses {
+        width: 108px;
+        height: 30px;
+        border-radius: 18px;
+        top: 88px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .avatar-layer.gloves {
+        width: 168px;
+        height: 46px;
+        border-radius: 24px;
+        top: 196px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .avatar-layer.scarf {
+        width: 120px;
+        height: 32px;
+        border-radius: 18px;
+        top: 142px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .legend {
+        background: var(--surface-muted);
+        border-radius: 20px;
+        padding: 20px 24px;
+        line-height: 1.6;
+        color: var(--text-muted);
+        font-size: 0.94rem;
+      }
+
+      .avatar-layer .shape {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 28px;
+      }
+
+      .shape-top {
+        width: 150px;
+        height: 118px;
+        top: -8px;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      }
+
+      .shape-bottom {
+        width: 128px;
+        height: 112px;
+        top: -6px;
+        border-radius: 30px 30px 18px 18px;
+      }
+
+      .shape-outerwear {
+        width: 198px;
+        height: 226px;
+        top: -8px;
+        border-radius: 50%;
+        clip-path: polygon(
+          50% 0%,
+          82% 4%,
+          100% 18%,
+          100% 70%,
+          95% 76%,
+          90% 68%,
+          84% 76%,
+          78% 68%,
+          72% 76%,
+          66% 68%,
+          60% 76%,
+          54% 68%,
+          48% 76%,
+          42% 68%,
+          36% 76%,
+          30% 68%,
+          24% 76%,
+          18% 68%,
+          12% 76%,
+          6% 70%,
+          0% 70%,
+          0% 18%,
+          18% 4%
+        );
+      }
+
+      .shape-hat {
+        width: 110px;
+        height: 52px;
+        top: 0;
+        border-radius: 50px 50px 18px 18px;
+      }
+
+      .shape-scarf {
+        width: 124px;
+        height: 24px;
+        top: 4px;
+        border-radius: 24px;
+      }
+
+      .shape-shoes {
+        width: 140px;
+        height: 36px;
+        top: -4px;
+      }
+
+      .shape-shoes-piece {
+        position: absolute;
+        width: 52px;
+        height: 26px;
+        border-radius: 18px;
+        top: 8px;
+      }
+
+      .shape-shoes-piece.left {
+        left: 10px;
+      }
+
+      .shape-shoes-piece.right {
+        right: 10px;
+      }
+
+      .shape-gloves {
+        width: 168px;
+        height: 56px;
+        top: -6px;
+      }
+
+      .shape-gloves-piece {
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        top: 12px;
+      }
+
+      .shape-gloves-piece.left {
+        left: 6px;
+      }
+
+      .shape-gloves-piece.right {
+        right: 6px;
+      }
+
+      .shape-glasses {
+        width: 120px;
+        height: 36px;
+        top: -2px;
+      }
+
+      .shape-glasses-piece {
+        position: absolute;
+        width: 36px;
+        height: 30px;
+        border-radius: 50%;
+        top: 6px;
+      }
+
+      .shape-glasses-piece.left {
+        left: 20px;
+      }
+
+      .shape-glasses-piece.right {
+        right: 20px;
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(16, 26, 56, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+      }
+
+      .modal-backdrop.show {
+        display: flex;
+      }
+
+      .modal {
+        background: var(--surface);
+        border-radius: 28px;
+        padding: 32px 36px;
+        width: min(480px, 100%);
+        text-align: center;
+        box-shadow: 0 28px 46px rgba(15, 22, 56, 0.18);
+      }
+
+      .modal h3 {
+        margin: 0 0 16px;
+        font-size: 1.6rem;
+        color: var(--brand-indigo);
+      }
+
+      .modal p {
+        margin: 0 0 8px;
+        color: var(--text-muted);
+        line-height: 1.55;
+      }
+
+      .modal .modal-highlight {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--brand-blue);
+        margin: 18px 0;
+      }
+
+      .modal-actions {
+        margin-top: 24px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .modal button {
+        padding: 12px 22px;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .modal .primary {
+        background: linear-gradient(90deg, var(--brand-blue), var(--brand-mint));
+        color: #fff;
+      }
+
+      .modal .secondary {
+        background: var(--surface-muted);
+        color: var(--brand-indigo);
+      }
+
+      @media (max-width: 1080px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+        .info-panel {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .selection-panel {
+          min-height: auto;
+        }
+        .selection-scroll {
+          overflow: visible;
+          padding-right: 0;
+        }
+      }
+
+      @media (max-width: 720px) {
+        body {
+          padding: 24px 16px 48px;
+        }
+
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .info-panel {
+          gap: 20px;
+        }
+
+        .points-display {
+          flex-direction: column;
+        }
+
+        .primary-action {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Knapsack Outfit Challenge</h1>
+        <p class="subtitle">
+          Spend your points wisely to outfit our stick hero and get as close as possible to the optimal value.
+        </p>
+      </div>
+      <button class="reset-btn" id="reset-btn">Restart</button>
+    </header>
+    <main>
+      <section class="panel info-panel">
+        <div class="info-metrics">
+          <h2>Visualize Your Strategy</h2>
+          <div class="stage-header">
+            <div class="stage-badge" id="stage-indicator">Stage 1 · Wardrobe Warm-up</div>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" id="stage-progress"></div>
+            </div>
+          </div>
+          <div class="info-summary">
+            <div class="stage-details" id="stage-description">
+              Pick one item from each clothing category. Each option costs points but adds style value. Try to maximize your total value!
+            </div>
+            <div class="points-display">
+              <div class="points-card primary">
+                <label for="points-progress">Points</label>
+                <div class="points-progress">
+                  <span id="points-progress">0</span>
+                  <small id="total-points-label">/ 0</small>
+                </div>
+              </div>
+              <div class="points-card">
+                <label>Total Value</label>
+                <div class="value-highlight" id="total-value">0</div>
+                <div class="value-meta">
+                  <span>Stage value</span>
+                  <span id="current-stage-value">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feedback" id="feedback" aria-live="polite" style="display: none;"></div>
+        </div>
+      </section>
+      <section class="panel selection-panel">
+        <div class="selection-scroll">
+          <div class="items-grid" id="items-grid"></div>
+          
+        </div>
+        <button class="primary-action" id="advance-btn">Next</button>
+      </section>
+      <section class="panel avatar-panel">
+        <h2>Your Stick Hero</h2>
+        <div class="avatar-canvas">
+          <svg viewBox="0 0 240 360" aria-hidden="true">
+            <circle cx="120" cy="70" r="38" stroke="#1b1f3b" stroke-width="8" fill="none" />
+            <line x1="120" y1="108" x2="120" y2="230" stroke="#1b1f3b" stroke-width="10" stroke-linecap="round" />
+            <line x1="120" y1="150" x2="70" y2="200" stroke="#1b1f3b" stroke-width="10" stroke-linecap="round" />
+            <line x1="120" y1="150" x2="170" y2="200" stroke="#1b1f3b" stroke-width="10" stroke-linecap="round" />
+            <line x1="120" y1="230" x2="80" y2="330" stroke="#1b1f3b" stroke-width="10" stroke-linecap="round" />
+            <line x1="120" y1="230" x2="160" y2="330" stroke="#1b1f3b" stroke-width="10" stroke-linecap="round" />
+          </svg>
+          <div id="layer-top" class="avatar-layer top"></div>
+          <div id="layer-bottom" class="avatar-layer bottom"></div>
+          <div id="layer-shoes" class="avatar-layer shoes"></div>
+          <div id="layer-outerwear" class="avatar-layer outerwear"></div>
+          <div id="layer-hat" class="avatar-layer hat"></div>
+          <div id="layer-glasses" class="avatar-layer glasses"></div>
+          <div id="layer-gloves" class="avatar-layer gloves"></div>
+          <div id="layer-scarf" class="avatar-layer scarf"></div>
+        </div>
+        <!-- <div class="legend">
+          Stick with the budget! The knapsack problem asks you to choose the best mix of items when points are limited.
+          Once you hit submit, you will see how your choices compare to the optimal solution.
+        </div> -->
+        
+        <div class="cart-summary" id="cart-summary">
+            <h3>Current Outfit</h3>
+            <div id="cart-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="result-modal" role="dialog" aria-modal="true" aria-live="assertive">
+      <div class="modal">
+        <h3 id="modal-title">Great Job!</h3>
+        <p id="modal-body">You spent your points wisely.</p>
+        <div class="modal-highlight" id="modal-score">0%</div>
+        <p id="modal-note">Keep experimenting to reach the theoretical best value.</p>
+        <div class="modal-actions">
+          <button class="secondary" id="modal-close">Close</button>
+          <button class="primary" id="modal-confirm">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 數據定義：包含各階段的商品資料、成本與價值
+      const stages = [
+        {
+          id: 0,
+          title: "Stage 1 · Wardrobe Warm-up",
+          description:
+            "Pick one item from each clothing category. Each option costs points but adds style value. Try to maximize your total value!",
+          startingPoints: 120,
+          additionalPoints: 0,
+          advanceLabel: "Next",
+          items: [
+            {
+              category: "Top",
+              tooltip: "Choose one top to keep your hero comfortable.",
+              avatarLayer: "layer-top",
+              options: [
+                { name: "Crimson Hoodie", color: "#c62828", cost: 40, value: 45 },
+                { name: "Skyline Tee", color: "#64b5f6", cost: 25, value: 28 },
+                { name: "Forest Sweatshirt", color: "#2e7d32", cost: 35, value: 38 }
+              ]
+            },
+            {
+              category: "Bottom",
+              tooltip: "Pick a pair of pants that match the vibe.",
+              avatarLayer: "layer-bottom",
+              options: [
+                { name: "Indigo Jeans", color: "#283593", cost: 36, value: 42 },
+                { name: "Amber Joggers", color: "#ffb300", cost: 28, value: 30 },
+                { name: "Slate Chinos", color: "#546e7a", cost: 32, value: 34 }
+              ]
+            },
+            {
+              category: "Shoes",
+              tooltip: "Shoes keep the journey going—pick one pair.",
+              avatarLayer: "layer-shoes",
+              options: [
+                { name: "Velocity Trainers", color: "#212121", cost: 30, value: 34 },
+                { name: "Coral High-Tops", color: "#ff7043", cost: 26, value: 27 },
+                { name: "Frost Boots", color: "#90caf9", cost: 34, value: 38 }
+              ]
+            },
+            {
+              category: "Outerwear",
+              tooltip: "A jacket adds extra flair (and value).",
+              avatarLayer: "layer-outerwear",
+              options: [
+                { name: "Aurora Jacket", color: "#7e57c2", cost: 48, value: 56 },
+                { name: "Citrus Bomber", color: "#ffcc42", cost: 38, value: 40 },
+                { name: "Midnight Parka", color: "#1a237e", cost: 44, value: 52 }
+              ]
+            }
+          ]
+        },
+        {
+          id: 1,
+          title: "Stage 2 · Accessory Remix",
+          description:
+            "You earned a point bonus! Accessorize with one item from each category. New costs, new values, new optimal mix.",
+          startingPoints: 0,
+          additionalPoints: 70,
+          advanceLabel: "Submit",
+          items: [
+            {
+              category: "Glasses",
+              tooltip: "A sharp look boosts confidence.",
+              avatarLayer: "layer-glasses",
+              options: [
+                { name: "Neon Frames", color: "#00bcd4", cost: 18, value: 26 },
+                { name: "Obsidian Shades", color: "#263238", cost: 22, value: 30 },
+                { name: "Golden Visors", color: "#ffb300", cost: 28, value: 36 }
+              ]
+            },
+            {
+              category: "Hat",
+              tooltip: "Top it off with a bold hat.",
+              avatarLayer: "layer-hat",
+              options: [
+                { name: "Crater Beanie", color: "#9e9d24", cost: 16, value: 22 },
+                { name: "Starlight Fedora", color: "#3949ab", cost: 26, value: 34 },
+                { name: "Scarlet Cap", color: "#e53935", cost: 20, value: 27 }
+              ]
+            },
+            {
+              category: "Gloves",
+              tooltip: "Warm hands, warm heart.",
+              avatarLayer: "layer-gloves",
+              options: [
+                { name: "Aurora Mitts", color: "#26a69a", cost: 18, value: 24 },
+                { name: "Midnight Grips", color: "#102027", cost: 24, value: 32 },
+                { name: "Sunrise Wraps", color: "#ff7043", cost: 20, value: 28 }
+              ]
+            },
+            {
+              category: "Scarf",
+              tooltip: "Tie everything together with a scarf.",
+              avatarLayer: "layer-scarf",
+              options: [
+                { name: "Frost Ribbon", color: "#81d4fa", cost: 22, value: 30 },
+                { name: "Magma Loop", color: "#ff5722", cost: 24, value: 32 },
+                { name: "Velvet Wrap", color: "#4a148c", cost: 28, value: 38 }
+              ]
+            }
+          ]
+        }
+      ];
+
+      // 狀態管理：追蹤階段、點數與選擇
+      const state = {
+        stageIndex: 0,
+        totalPoints: stages[0].startingPoints,
+        selections: {},
+        modalContext: null
+      };
+
+      // 元素參照
+      const elements = {
+        stageIndicator: document.getElementById("stage-indicator"),
+        stageDescription: document.getElementById("stage-description"),
+        stageProgress: document.getElementById("stage-progress"),
+        pointsProgress: document.getElementById("points-progress"),
+        totalPointsLabel: document.getElementById("total-points-label"),
+        totalValue: document.getElementById("total-value"),
+        currentStageValue: document.getElementById("current-stage-value"),
+        itemsGrid: document.getElementById("items-grid"),
+        cartList: document.getElementById("cart-list"),
+        feedback: document.getElementById("feedback"),
+        advanceBtn: document.getElementById("advance-btn"),
+        resetBtn: document.getElementById("reset-btn"),
+        modalBackdrop: document.getElementById("result-modal"),
+        modalTitle: document.getElementById("modal-title"),
+        modalBody: document.getElementById("modal-body"),
+        modalScore: document.getElementById("modal-score"),
+        modalNote: document.getElementById("modal-note"),
+        modalClose: document.getElementById("modal-close"),
+        modalConfirm: document.getElementById("modal-confirm")
+      };
+
+      // 初始化頁面
+      function init() {
+        state.stageIndex = 0;
+        state.totalPoints = stages[0].startingPoints;
+        state.selections = {};
+        state.modalContext = null;
+        updateStageUI();
+        renderCurrentStage();
+        updateCartSummary();
+        updatePointsDisplay();
+        updateAvatarLayers();
+        updateAdvanceButton();
+        elements.feedback.textContent = "";
+      }
+
+      // 重新載入當前階段資料
+      function renderCurrentStage() {
+        const stage = stages[state.stageIndex];
+        elements.itemsGrid.innerHTML = "";
+        stage.items.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "category-card";
+
+          const title = document.createElement("h3");
+          title.textContent = `${item.category}`;
+          title.title = item.tooltip;
+
+          const optionsWrap = document.createElement("div");
+          optionsWrap.className = "options";
+
+          item.options.forEach((option) => {
+            const optionKey = `${item.category}::${option.name}`;
+            const button = document.createElement("button");
+            button.className = "option-btn";
+            button.type = "button";
+            button.dataset.category = item.category;
+            button.dataset.option = option.name;
+            button.dataset.optionKey = optionKey;
+            button.dataset.cost = option.cost;
+
+            const info = document.createElement("div");
+            info.className = "option-info";
+            const name = document.createElement("span");
+            name.className = "option-name";
+            name.textContent = option.name;
+            const meta = document.createElement("span");
+            meta.className = "option-meta";
+
+            const costTag = document.createElement("span");
+            costTag.className = "option-tag";
+            costTag.textContent = `${option.cost} pts`;
+
+            const valueTag = document.createElement("span");
+            valueTag.className = "option-tag value";
+            valueTag.textContent = `value ${option.value}`;
+
+            meta.appendChild(costTag);
+            meta.appendChild(valueTag);
+            info.appendChild(name);
+            info.appendChild(meta);
+
+            const swatch = document.createElement("span");
+            swatch.className = "option-swatch";
+            swatch.style.backgroundColor = option.color;
+
+            button.appendChild(info);
+            button.appendChild(swatch);
+
+            if (state.selections[stage.id]?.[optionKey]) {
+              button.classList.add("active");
+            }
+
+            button.addEventListener("click", () => handleSelection(stage.id, item, option, optionKey));
+            optionsWrap.appendChild(button);
+          });
+
+          card.appendChild(title);
+          card.appendChild(optionsWrap);
+          elements.itemsGrid.appendChild(card);
+        });
+      }
+
+      // 處理選擇商品邏輯
+      function handleSelection(stageId, item, option, optionKey) {
+        const existingStageSelections = state.selections[stageId];
+        const newStageSelections = existingStageSelections ? { ...existingStageSelections } : {};
+        const alreadySelected = Boolean(newStageSelections[optionKey]);
+
+        if (alreadySelected) {
+          delete newStageSelections[optionKey];
+        } else {
+          newStageSelections[optionKey] = {
+            ...option,
+            category: item.category,
+            avatarLayer: item.avatarLayer
+          };
+        }
+
+        const updatedSelections = { ...state.selections };
+        if (Object.keys(newStageSelections).length === 0) {
+          delete updatedSelections[stageId];
+        } else {
+          updatedSelections[stageId] = newStageSelections;
+        }
+
+        const prospectiveSpent = calculatePointsSpent(updatedSelections);
+        if (!alreadySelected && prospectiveSpent > state.totalPoints) {
+          return;
+        }
+
+        state.selections = updatedSelections;
+        elements.feedback.textContent = "";
+        updateOptionHighlights();
+        updateCartSummary();
+        updatePointsDisplay();
+        updateAvatarLayers();
+        updateAdvanceButton();
+      }
+
+      // 計算已花費點數
+      function calculatePointsSpent(selectionsObj = state.selections) {
+        let spent = 0;
+        Object.values(selectionsObj).forEach((group) => {
+          Object.values(group).forEach((selection) => {
+            spent += selection.cost;
+          });
+        });
+        return spent;
+      }
+
+      // 計算總價值
+      function calculateTotalValue(selectionsObj = state.selections) {
+        let value = 0;
+        Object.values(selectionsObj).forEach((group) => {
+          Object.values(group).forEach((selection) => {
+            value += selection.value;
+          });
+        });
+        return value;
+      }
+
+      // 更新選項樣式
+      function updateOptionHighlights() {
+        const stage = stages[state.stageIndex];
+        const currentSelections = state.selections[stage.id] ?? {};
+        document.querySelectorAll(".option-btn").forEach((btn) => {
+          const optionKey = btn.dataset.optionKey;
+          if (!optionKey) return;
+          if (currentSelections[optionKey]) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      // 更新選項可用狀態
+      function updateOptionStates() {
+        const stage = stages[state.stageIndex];
+        const currentSelections = state.selections[stage.id] ?? {};
+        const remainingPoints = Math.max(0, state.totalPoints - calculatePointsSpent());
+
+        document.querySelectorAll(".option-btn").forEach((btn) => {
+          const optionKey = btn.dataset.optionKey;
+          const cost = Number(btn.dataset.cost);
+          const isSelected = Boolean(currentSelections[optionKey]);
+          const shouldDisable = !isSelected && cost > remainingPoints;
+
+          btn.disabled = shouldDisable;
+          btn.classList.toggle("disabled", shouldDisable);
+        });
+      }
+
+      // 更新購物車摘要
+      function updateCartSummary() {
+        elements.cartList.innerHTML = "";
+        const stagesWithSelections = Object.entries(state.selections).filter(
+          ([, selections]) => Object.keys(selections).length > 0
+        );
+
+        if (stagesWithSelections.length === 0) {
+          const empty = document.createElement("p");
+          empty.textContent = "No items selected yet. Start building your look!";
+          empty.style.color = "var(--text-muted)";
+          elements.cartList.appendChild(empty);
+          return;
+        }
+
+        stagesWithSelections.forEach(([stageId, selections]) => {
+          const stageTitle = document.createElement("div");
+          stageTitle.className = "cart-entry";
+          stageTitle.innerHTML = `<strong>${stages.find((s) => s.id === Number(stageId)).title}</strong>`;
+          elements.cartList.appendChild(stageTitle);
+
+          Object.values(selections).forEach((option) => {
+            const entry = document.createElement("div");
+            entry.className = "cart-entry";
+            entry.innerHTML = `<span>${option.category}: ${option.name}</span><span>${option.cost} pts · value ${option.value}</span>`;
+            elements.cartList.appendChild(entry);
+          });
+        });
+      }
+
+      // 更新點數顯示
+      function updatePointsDisplay() {
+        const spent = calculatePointsSpent();
+        const remaining = Math.max(0, state.totalPoints - spent);
+        elements.pointsProgress.textContent = `${spent}`;
+        elements.totalPointsLabel.textContent = ` / ${state.totalPoints}`;
+        elements.totalValue.textContent = calculateTotalValue(state.selections);
+        elements.currentStageValue.textContent = valueForStage(state.selections, state.stageIndex);
+        updateOptionStates();
+      }
+
+      // 更新階段 UI
+      function updateStageUI() {
+        const stage = stages[state.stageIndex];
+        elements.stageIndicator.textContent = stage.title;
+        elements.stageDescription.textContent = stage.description;
+        const progressPercentage = ((state.stageIndex + 1) / stages.length) * 100;
+        elements.stageProgress.style.width = `${progressPercentage}%`;
+      }
+
+      // 更新前進按鈕
+      function updateAdvanceButton() {
+        const stage = stages[state.stageIndex];
+        elements.advanceBtn.textContent = stage.advanceLabel;
+        const hasSelection = state.selections[stage.id] && Object.keys(state.selections[stage.id]).length > 0;
+        elements.advanceBtn.disabled = false;
+      }
+
+      // 更新人偶造型
+      function updateAvatarLayers() {
+        const avatarLayers = document.querySelectorAll(".avatar-layer");
+        avatarLayers.forEach((layer) => {
+          layer.classList.remove("show");
+          layer.innerHTML = "";
+        });
+
+        Object.values(state.selections).forEach((group) => {
+          Object.values(group).forEach((selection) => {
+            const layerEl = document.getElementById(selection.avatarLayer);
+            if (layerEl) {
+              layerEl.classList.add("show");
+              renderAvatarShape(layerEl, selection);
+            }
+          });
+        });
+      }
+
+      function renderAvatarShape(layerEl, selection) {
+        const category = selection.category.toLowerCase();
+        const color = hexToRgba(selection.color, 0.3);
+
+        switch (category) {
+          case "top":
+            createSingleShape(layerEl, "shape-top", color);
+            break;
+          case "bottom":
+            createSingleShape(layerEl, "shape-bottom", color);
+            break;
+          case "outerwear":
+            createSingleShape(layerEl, "shape-outerwear", color);
+            break;
+          case "shoes":
+            createDualShape(layerEl, "shape-shoes", "shape-shoes-piece", color);
+            break;
+          case "gloves":
+            createDualShape(layerEl, "shape-gloves", "shape-gloves-piece", color);
+            break;
+          case "glasses":
+            createDualShape(layerEl, "shape-glasses", "shape-glasses-piece", color);
+            break;
+          case "hat":
+            createSingleShape(layerEl, "shape-hat", color);
+            break;
+          case "scarf":
+            createSingleShape(layerEl, "shape-scarf", color);
+            break;
+          default:
+            createSingleShape(layerEl, "shape-outerwear", color);
+        }
+      }
+
+      function createSingleShape(layerEl, className, color) {
+        const shape = document.createElement("div");
+        shape.className = `shape ${className}`;
+        shape.style.background = color;
+        layerEl.appendChild(shape);
+      }
+
+      function createDualShape(layerEl, containerClass, pieceClass, color) {
+        const container = document.createElement("div");
+        container.className = `shape ${containerClass}`;
+        ["left", "right"].forEach((position) => {
+          const piece = document.createElement("span");
+          piece.className = `${pieceClass} ${position}`;
+          piece.style.background = color;
+          container.appendChild(piece);
+        });
+        layerEl.appendChild(container);
+      }
+
+      function hexToRgba(hex, alpha = 0.3) {
+        if (!hex) return `rgba(0, 0, 0, ${alpha})`;
+        let normalized = hex.replace("#", "");
+        if (normalized.length === 3) {
+          normalized = normalized
+            .split("")
+            .map((char) => char + char)
+            .join("");
+        }
+        const bigint = parseInt(normalized, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+      // 前往下一階段或提交
+      function handleAdvance() {
+        const stage = stages[state.stageIndex];
+        const spent = calculatePointsSpent(state.selections);
+        const value = calculateTotalValue(state.selections);
+
+        if (state.stageIndex === 0) {
+          const stageBest = calculateStageBest(stage, stage.startingPoints);
+          const percent = Math.round((valueForStage(state.selections, 0) / stageBest) * 100);
+          showModal({
+            title: "Stage 1 Results",
+            body: "Here is how your outfit ranks against the optimal combination for this budget.",
+            score: `${Number.isFinite(percent) ? percent : 0}%`,
+            note: `Your value: ${valueForStage(state.selections, 0)} (best possible ${stageBest}).`,
+            confirmLabel: "Continue to Stage 2",
+            onConfirm: () => {
+              advanceToNextStage();
+              hideModal();
+            }
+          });
+        } else {
+          const optimal = calculateGlobalBest(state.totalPoints);
+          const percent = Math.round((value / optimal.bestValue) * 100);
+          showModal({
+            title: "Final Score",
+            body: "You have completed the Knapsack Outfit Challenge!",
+            score: `${Number.isFinite(percent) ? percent : 0}%`,
+            note: `Your total value: ${value} (optimal mix value ${optimal.bestValue} within ${state.totalPoints} pts).`,
+            confirmLabel: "Try Again",
+            onConfirm: () => {
+              hideModal();
+              init();
+            }
+          });
+        }
+      }
+
+      // 計算單階段最佳值（暴力枚舉）
+      function calculateStageBest(stage, budget) {
+        const options = stage.items.flatMap((item) => item.options);
+        return knapsackBest(options, budget);
+      }
+
+      // 計算全局最佳值（兩階段集合）
+      function calculateGlobalBest(budget) {
+        const options = stages.flatMap((stage) => stage.items.flatMap((item) => item.options));
+        const bestValue = knapsackBest(options, budget);
+        return { bestValue };
+      }
+
+      function knapsackBest(options, budget) {
+        const capacity = Math.max(0, Math.floor(budget));
+        const n = options.length;
+        // 0-1背包：dp[i][w] = 前i个物品在容量w下的最大价值
+        const dp = Array(n + 1).fill(0).map(() => Array(capacity + 1).fill(0));
+        
+        for (let i = 1; i <= n; i++) {
+          const item = options[i - 1];
+          for (let w = 0; w <= capacity; w++) {
+            // 不选第i个物品
+            dp[i][w] = dp[i - 1][w];
+            // 如果能选第i个物品，取较大值
+            if (w >= item.cost) {
+              dp[i][w] = Math.max(dp[i][w], dp[i - 1][w - item.cost] + item.value);
+            }
+          }
+        }
+        
+        return dp[n][capacity];
+      }
+
+      // 計算特定階段的價值
+      function valueForStage(selections, stageId) {
+        const stageSelections = selections[stageId] ?? {};
+        return Object.values(stageSelections).reduce((acc, option) => acc + option.value, 0);
+      }
+
+      // 切換至下一階段並新增點數
+      function advanceToNextStage() {
+        if (state.stageIndex >= stages.length - 1) return;
+        state.stageIndex += 1;
+        const stage = stages[state.stageIndex];
+        state.totalPoints += stage.additionalPoints;
+        updateStageUI();
+        renderCurrentStage();
+        updateOptionHighlights();
+        updatePointsDisplay();
+        updateCartSummary();
+        updateAvatarLayers();
+        updateAdvanceButton();
+        elements.feedback.textContent = "";
+      }
+
+      // 顯示彈窗
+      function showModal({ title, body, score, note, confirmLabel, onConfirm }) {
+        elements.modalTitle.textContent = title;
+        elements.modalBody.textContent = body;
+        elements.modalScore.textContent = score;
+        elements.modalNote.textContent = note;
+        elements.modalConfirm.textContent = confirmLabel;
+        state.modalContext = { onConfirm };
+        elements.modalBackdrop.classList.add("show");
+      }
+
+      function hideModal() {
+        elements.modalBackdrop.classList.remove("show");
+        state.modalContext = null;
+      }
+
+      // 事件綁定
+      elements.advanceBtn.addEventListener("click", handleAdvance);
+      elements.resetBtn.addEventListener("click", () => init());
+      elements.modalClose.addEventListener("click", hideModal);
+      elements.modalBackdrop.addEventListener("click", (event) => {
+        if (event.target === elements.modalBackdrop) {
+          hideModal();
+        }
+      });
+      elements.modalConfirm.addEventListener("click", () => {
+        if (state.modalContext?.onConfirm) {
+          state.modalContext.onConfirm();
+        } else {
+          hideModal();
+        }
+      });
+
+      init();
+    </script>
+  </body>
+</html>
+
