@@ -82,7 +82,7 @@ code { font-size: .95em; overflow-wrap: anywhere; }
 .contact-email span { display: inline-block; margin-left: .5rem; }
 .contact-email:hover { color: var(--accent); }
 .site-footer { display: flex; justify-content: space-between; gap: 1.5rem; padding-block: 1.7rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .875rem; }
-.site-footer div { display: flex; gap: 1.5rem; }
+.site-footer div { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
 .site-footer a { text-decoration: none; }
 .site-footer a:hover { color: var(--ink); text-decoration: underline; }
 .research-hero { padding-block: 76px 64px; }
