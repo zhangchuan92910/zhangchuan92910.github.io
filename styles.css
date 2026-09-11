@@ -58,7 +58,7 @@ code { font-size: .95em; overflow-wrap: anywhere; }
 .research-feature p:not(.eyebrow) { line-height: 1.85; }
 .light-link { color: white; text-decoration-color: #829cac; }
 .light-link:hover { text-decoration-color: white; }
-.light-link:focus-visible { outline-color: white; }
+.research-feature a:focus-visible { outline-color: white; }
 .opensource-feature { background: var(--pale-blue); }
 .opensource-feature .contribution-note { margin-top: 1.5rem; display: flex; align-items: center; gap: .6rem; font-size: .875rem; font-weight: 600; color: var(--accent); }
 .small-copy { color: var(--muted); font-size: .875rem; line-height: 1.7; }
