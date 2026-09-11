@@ -33,7 +33,8 @@ code { font-size: .95em; overflow-wrap: anywhere; }
 .site-header nav a:hover, .site-header nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
 .eyebrow { margin-bottom: 1.4rem; color: var(--accent); font-size: .875rem; font-weight: 600; letter-spacing: .075em; text-transform: uppercase; line-height: 1.55; }
 .hero { display: grid; grid-template-columns: 1.4fr 1fr; align-items: center; gap: 5rem; padding-block: 94px 92px; }
-.hero h1 { font-size: clamp(3.5rem, 6.8vw, 6rem); line-height: 1.05; letter-spacing: -.055em; white-space: nowrap; }
+.hero h1 { font-size: clamp(3.5rem, 6.8vw, 6rem); line-height: 1.05; letter-spacing: -.055em; white-space: normal; }
+.name-zh { display: inline-block; font-family: "Songti SC", "Noto Serif CJK SC", SimSun, serif; font-size: clamp(1.35rem, 2.2vw, 2rem); font-weight: 400; letter-spacing: .08em; color: var(--muted); white-space: nowrap; }
 .name-period { color: var(--accent); }
 .hero-statement { margin-top: 1.9rem; color: var(--ink); font-family: var(--serif); font-size: clamp(1.7rem, 2.5vw, 2.25rem); line-height: 1.35; letter-spacing: -.015em; }
 .hero-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1.8rem; }
